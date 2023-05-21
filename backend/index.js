@@ -46,22 +46,20 @@ app.post('/storeNotes', (req,res)=>{
     });
 });
 //TODO: Create automatic $groupings in MySQL, and retrieve N of such documents.
-app.get('/retrieveNotes', (req,res)=>{
-    console.log(req.headers['title']);
-    //TODO: SANITIZE INPUTS!!!
-    connection.query(`INSERT INTO NOTES (Folder, Title, Data) VALUES ("newFolder", "title", "data")`, (err,rows)=>{
+app.get('/retrieveNote', (req,res)=>{
+    connection.query(`SELECT * FROM NOTES WHERE Title='${req.headers['file']}' AND Folder='${req.headers['folder']}'`, (err,rows, fields)=>{
         if (err) throw err;
         console.log(rows);
+        res.send(rows);
     });
-
-
-    res.send({'title' : "Sample Title",
-            'data' : "Sample Data"});
 });
 // TODO: Implement changing the grouping of individual files into preexisting or new groups in MySQL.
-app.post('/changeNoteGroup', (res,req)=>{
+app.post('/changeNoteGroup', (req,res)=>{
 
 });
-app.get('/returnFolders', (res,req)=>{
-
+app.get('/returnFolderFiles', (req,res)=>{
+    connection.query(`SELECT * FROM NOTES WHERE Folder='${req.headers['folder']}'`, (err,rows)=>{
+        res.send(rows);
+    })
+    
 });
