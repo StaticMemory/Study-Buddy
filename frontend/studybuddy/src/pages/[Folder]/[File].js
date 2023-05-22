@@ -1,7 +1,5 @@
-import NoteDisplay from "@/components/NoteDisplay";
-import { useRouter } from "next/router"
 import React from "react";
-
+import NoteDisplay from "@/components/NoteDisplay";
 export default function DisplayFile(props){
     let fileData = props['jsonData'][0];
     return <React.Fragment>
@@ -16,7 +14,7 @@ headers:{
     'Accept': 'application/json',
     'Content-Type': 'application/json',
     'File': context.query.File,
-    'Folder': 'Second Folder'
+    'Folder': context.query.Folder
 }});
     const jsonData = await response.json();
     return {props : {jsonData}};

@@ -63,3 +63,21 @@ app.get('/returnFolderFiles', (req,res)=>{
     })
     
 });
+app.delete('/deleteNote', (req,res)=>{
+    console.log(`DELETE * FROM NOTES WHERE Folder='${req.headers['folder']}' AND Title='${req.headers['file']}'`);
+    connection.query(`DELETE FROM NOTES WHERE Folder='${req.headers['folder']}' AND Title='${req.headers['file']}'`, (err,rows)=>{
+        console.log(rows);
+        res.send(rows);
+    });
+});
+app.delete('/deleteFolder', (req,res)=>{
+    connection.query(`DELETE FROM NOTES WHERE Folder='${req.headers['folder']}'`, (err,rows)=>{
+        if(err) throw err;
+        res.send(rows);
+    });
+});
+app.get('/returnUniqueFolders', (req,res) =>{
+    connection.query(`SELECT DISTINCT FOLDER FROM NOTES`, (err,rows) =>{
+        res.send(rows);
+    });
+});
