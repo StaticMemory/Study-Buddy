@@ -42,14 +42,12 @@ app.post('/storeNotes', (req,res)=>{
     })
     connection.query(`INSERT INTO NOTES (Folder, Title, Data) VALUES ("${req.body['folder']}", "${req.body['title']}", "${req.body['data']}")`, (err,rows)=>{
         if (err) throw err;
-        console.log(rows);
     });
 });
 //TODO: Create automatic $groupings in MySQL, and retrieve N of such documents.
 app.get('/retrieveNote', (req,res)=>{
     connection.query(`SELECT * FROM NOTES WHERE Title='${req.headers['file']}' AND Folder='${req.headers['folder']}'`, (err,rows, fields)=>{
         if (err) throw err;
-        console.log(rows);
         res.send(rows);
     });
 });
@@ -66,7 +64,6 @@ app.get('/returnFolderFiles', (req,res)=>{
 app.delete('/deleteNote', (req,res)=>{
     console.log(`DELETE * FROM NOTES WHERE Folder='${req.headers['folder']}' AND Title='${req.headers['file']}'`);
     connection.query(`DELETE FROM NOTES WHERE Folder='${req.headers['folder']}' AND Title='${req.headers['file']}'`, (err,rows)=>{
-        console.log(rows);
         res.send(rows);
     });
 });

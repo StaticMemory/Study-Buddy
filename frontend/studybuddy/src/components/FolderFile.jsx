@@ -19,10 +19,9 @@ export default function FolderFile(props){
         }
         getFiles();
     }, []);
-    return( <React.Fragment><button onClick={() => updateRenderFiles(true)}>{props.folder}</button>
-    <br></br>
+    return( <React.Fragment><button onClick={() => updateRenderFiles(!renderFiles)}>{props.folder}</button>
     {files.map((x)=> {
-         if(renderFiles) return <div onClick={() => {router.push(`/${encodeURIComponent(x['Folder'])}/${encodeURIComponent(x['Title'])}`)}} key={x['Title'].toString()}>{x['Title']}</div>
+         if(renderFiles) return (<div className='bg-red-300 w-32' onClick={() => {router.push(`/${encodeURIComponent(x['Folder'])}/${encodeURIComponent(x['Title'])}`)}} key={x['Title'].toString()}>{x['Title']}</div>)
     })}
     </React.Fragment>)
 }

@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 //Assumes note data passed through props :DDD
 export default function NoteDisplay(props){
+    const [editing, updateEdit] = useState(false);
     const delNote = () =>{
         fetch("http://172.18.179.14:8000/deleteNote",{method:'DELETE',
     headers:{
@@ -10,10 +11,14 @@ export default function NoteDisplay(props){
         'File': props.title,
         'Folder': props.folder
     }})
+    const router = useRouter();
+    router.push('/home');
     }
-    return <React.Fragment><div>{props.title}</div>
+    return (<React.Fragment><div className='text-blue-600 justify-center flex font-bold italic text-lg'>{props.title}</div>
     <br></br>
-    <div>{props.data}</div>
+    <div className='justify-center flex box-border border-4 w-256 m-auto h-128 bg-orange-400 overflow-y-auto'>{props.data}</div>
+    <br></br>
     <button onClick={delNote}>DELETE THIS NOTE</button>
-    </React.Fragment>
+    <div className='justify-center flex' onClick = {() => updateEdit(!editing)}>Edit Note</div>
+    </React.Fragment>)
 }
