@@ -8,7 +8,7 @@ export default function DisplayFile(props){
 }
 export const getServerSideProps = async (context) =>{
     console.log(context.query.File);
-    const URL = "http://172.18.179.14:8000/retrieveNote";
+    const URL = "http://localhost:8000/retrieveNote";
     const response = await fetch(URL, {method:'GET',
 headers:{
     'Accept': 'application/json',

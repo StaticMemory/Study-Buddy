@@ -15,7 +15,7 @@ function ShowDel({ doRender, folder}){
     const [del, setDel] = useState(false);
     useEffect(()=>{
         const delFolder = async () =>{
-            const data = await fetch("http://172.18.179.14:8000/deleteFolder", {method:"POST",
+            const data = await fetch("http://localhost:8000/deleteFolder", {method:"POST",
             headers:{
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -36,9 +36,10 @@ export default function FolderFile(props){
     const [renderFiles, updateRenderFiles] = useState(false);
     const [files, setFiles] = useState([]);
     const router = useRouter();
+    const [renderButton, swapRenderButton] = useState(false);
     useEffect(()=>{
         const getFiles = async () =>{
-            const data = await fetch("http://172.18.179.14:8000/returnFolderFiles", {method:"GET",
+            const data = await fetch("http://localhost:8000/returnFolderFiles", {method:"GET",
             headers:{
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -49,13 +50,17 @@ export default function FolderFile(props){
         }
         getFiles();
     }, []);
-    return<div 
-    ><b ><button className="bg-green-300 border-2 pb-1 border-black" onClick={() => updateRenderFiles(!renderFiles)}>{props.folder}</button></b>
+    return<div className='rounded-lg overflow-hidden w-64 bg-gray-300 border-4 inline-block h-64 float-left overflow-x-auto text-center border-black relative' 
+    onMouseEnter={() => {swapRenderButton(true)}} onMouseLeave={() =>{swapRenderButton(false)}}><div>
+    <b><button className="rounded-lg bg-green-300 border-2 pb-1 border-black pr-1 pl-1" onClick={() => updateRenderFiles(!renderFiles)}>{props.folder}</button></b>
+    <br></br>
+    <div className="overflow-y-auto h-64 border-black border-2">
     {files.map((x)=> {
-         if(renderFiles) return (<div className="text-center"><div className='cursor-pointer pl-1 pr-1 w-fit border-2 border-black inline-block' 
+         if(renderFiles) return (<div className="text-center"><div className='cursor-pointer pl-1 pr-1 w-fit border-2 border-black inline-block rounded-lg overflow-y-auto' 
          onClick={() => {router.push(`/${encodeURIComponent(x['Folder'])}/${encodeURIComponent(x['Title'])}`)}} key={x['Title'].toString()}>{x['Title']}</div></div>);
     })}
-    <AddFile doRender={renderFiles} folder={props.folder}></AddFile><ShowDel doRender={props.isHover} folder={props.folder}></ShowDel>
-    
+    <AddFile doRender={renderFiles} folder={props.folder}></AddFile><ShowDel doRender={renderButton} folder={props.folder}></ShowDel>
     </div>
+    
+    </div></div>
 }

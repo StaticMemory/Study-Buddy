@@ -5,7 +5,7 @@ export default function FrameFile(props){
     const [apiData, updateAPI] = useState('');
     useEffect(()=>{
         const sendData = async () => {
-            const Url = "http://172.18.179.14:8000/storeNotes/";
+            const Url = "http://localhost:8000/storeNotes/";
             let responseObj = await fetch(Url, {method:'POST',
             headers:{
                 'Accept': 'application/json',

@@ -7,7 +7,7 @@ export default function NewFolder(){
     const [isCreated, setIsCreated] = useState(false);
     useEffect(()=>{
         const createFolder = async (event) =>{
-            await fetch("http://172.18.179.14:8000/addEmptyFolder", {method:"POST", 
+            await fetch("http://localhost:8000/addEmptyFolder", {method:"POST", 
         headers:{
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -29,6 +29,6 @@ export default function NewFolder(){
     </React.Fragment>
     }
     else{
-        return <FolderFile folder={FolderName}></FolderFile>
+        return <FolderFile isHover={true} folder={FolderName}></FolderFile>
     }
 }
