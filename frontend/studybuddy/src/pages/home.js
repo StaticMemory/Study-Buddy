@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Link from 'next/link';
-import FolderFile from "@/components/FolderFile";
-import NewFolder from "@/components/NewFolder";
-import { render } from "react-dom";
+import SideBar from "@/components/SideBar";
+import RenderBarButton from "@/components/RenderBarButton";
+import UpDownArrowBar from "@/components/UpDownArrowBar";
 
 
 export const getStaticProps = async () =>{
@@ -16,22 +15,28 @@ export const getStaticProps = async () =>{
 }
 export default function HomePage({jsonData}){
     const [newFolderBox, addNewFolderBox] = useState([]);
-    return <React.Fragment>
-  
-      <header className="justify-center flex font-bold bg-teal-400">Welcome StaticMemory!</header>
-      <br></br>
-      <div className="w-256 h-128 overflow-y-auto">
-      <div className="text-center border-2 border-black"><b>Your Note Packages</b></div>
-      {jsonData.map((x) => (
-      <FolderFile key={(x['FolderName'])} folder={x['FolderName']}></FolderFile>
-      ))}
-      
-      {newFolderBox.map((x)=>(
-        <div key={x}className='w-64 bg-gray-300 border-4 inline-block h-64 float-left overflow-x-auto text-center border-black relative'><NewFolder></NewFolder></div>
-      ))}
-      <div onClick={() => {addNewFolderBox([...newFolderBox, `Folder ${newFolderBox.length}`])}} className='rounded-lg overflow-hidden w-64 cursor-pointer bg-gray-300 border-4 inline-block h-64 float-left overflow-y-auto overflow-x-auto text-center border-black'>
-        Create New Folder!
+    const [colourState, setColourState] = useState("");
+    const [renderBar, setRenderBar] = useState(false)
+    const showBar = () =>{
+      setRenderBar(!renderBar)
+      if(renderBar){
+        setColourState("white")
+      }
+      else{
+        setColourState("gray-300")
+      }
+    }
+    return <div className={"bg-" + colourState + " h-screen w-screen duration-700"}>
+      <SideBar className="overflow-y-hidden" hide={renderBar} func={showBar} folder={jsonData}/>
+      <div className="bg-gray-500 py-1 border border-black">
+        
+        <div className="flex justify-between">
+          <RenderBarButton func={showBar}/>
+          <div className="justify-center flex font-bold bg-teal-400 px-2 py-1">Welcome StaticMemory!</div>
+          <div></div>
+        </div>
+        <div></div>
       </div>
+      <UpDownArrowBar/>
       </div>
-    </React.Fragment>
 }

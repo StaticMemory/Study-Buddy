@@ -50,17 +50,18 @@ export default function FolderFile(props){
         }
         getFiles();
     }, []);
-    return<div className='rounded-lg overflow-hidden w-64 bg-gray-300 border-4 inline-block h-64 float-left overflow-x-auto text-center border-black relative' 
+    return <div className="px-0.5"><div className='px-0.5 rounded-lg overflow-hidden w-32 bg-gray-300 border-4 inline-block h-64 float-left overflow-x-auto text-center border-black relative ' 
     onMouseEnter={() => {swapRenderButton(true)}} onMouseLeave={() =>{swapRenderButton(false)}}><div>
-    <b><button className="rounded-lg bg-green-300 border-2 pb-1 border-black pr-1 pl-1" onClick={() => updateRenderFiles(!renderFiles)}>{props.folder}</button></b>
+    <b><button className="pb-1 border-black pr-1 pl-1" onClick={() => updateRenderFiles(!renderFiles)}>{props.folder}</button></b>
     <br></br>
-    <div className="overflow-y-auto h-64 border-black border-2">
     {files.map((x)=> {
-         if(renderFiles) return (<div className="text-center"><div className='cursor-pointer pl-1 pr-1 w-fit border-2 border-black inline-block rounded-lg overflow-y-auto' 
-         onClick={() => {router.push(`/${encodeURIComponent(x['Folder'])}/${encodeURIComponent(x['Title'])}`)}} key={x['Title'].toString()}>{x['Title']}</div></div>);
+         if(renderFiles) return (<div className="overflow-y-auto h-64 border-black border-2"><div className="text-center"><div className='cursor-pointer pl-1 pr-1 w-fit border-2 border-black inline-block rounded-lg overflow-y-auto' 
+         onClick={() => {router.push(`/${encodeURIComponent(x['Folder'])}/${encodeURIComponent(x['Title'])}`)}} key={x['Title'].toString()}>{x['Title']}</div></div></div>);
     })}
     <AddFile doRender={renderFiles} folder={props.folder}></AddFile><ShowDel doRender={renderButton} folder={props.folder}></ShowDel>
-    </div>
     
-    </div></div>
+    
+        </div>
+    </div>
+    </div>
 }
